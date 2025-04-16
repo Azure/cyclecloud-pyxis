@@ -21,6 +21,21 @@ function install_pyxis_library() {
 
 function build_pyxis() {
 
+   # Check and install 'make' based on the OS
+   if [[ -f /etc/os-release ]]; then
+       . /etc/os-release
+       if [[ "$ID" == "ubuntu" ]]; then
+           logger -s "Installing 'make' on Ubuntu"
+           apt update && apt install -y make wget
+       else
+           logger -s "Installing 'make' on non-Ubuntu system (assuming RHEL/CentOS)"
+           yum install -y make wget
+       fi
+   else
+       logger -s "Unable to detect OS. Please ensure 'make' is installed."
+       exit 1
+   fi
+
    logger -s "Downloading Pyxis source code $PYXIS_VERSION"
 
    cd /tmp
