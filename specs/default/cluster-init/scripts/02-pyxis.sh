@@ -26,10 +26,10 @@ function build_pyxis() {
        . /etc/os-release
        if [[ "$ID" == "ubuntu" ]]; then
            logger -s "Installing 'make' on Ubuntu"
-           apt update && apt install -y make wget
+           apt update && apt install -y make gcc wget
        else
            logger -s "Installing 'make' on non-Ubuntu system (assuming RHEL/CentOS)"
-           yum install -y make wget
+           yum install -y make gcc wget
        fi
    else
        logger -s "Unable to detect OS. Please ensure 'make' is installed."
